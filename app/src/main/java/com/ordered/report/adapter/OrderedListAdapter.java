@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.ordered.report.HomeActivity;
 import com.ordered.report.R;
 import com.ordered.report.enumeration.OrderType;
-import com.ordered.report.models.CartonbookEntity;
+import com.ordered.report.models.OrderEntity;
 import com.ordered.report.utils.Utils;
 
 import java.util.Date;
@@ -23,10 +23,10 @@ import java.util.List;
 public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListViewHolder> {
 
     private Context context;
-    private List<CartonbookEntity> cartonbookEntities;
+    private List<OrderEntity> cartonbookEntities;
     private HomeActivity homeActivity;
 
-    public OrderedListAdapter(Context context, List<CartonbookEntity> cartonbookEntities) {
+    public OrderedListAdapter(Context context, List<OrderEntity> cartonbookEntities) {
         this.context = context;
         homeActivity = (HomeActivity) context;
         this.cartonbookEntities = cartonbookEntities;
@@ -40,28 +40,28 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListViewHold
 
     @Override
     public void onBindViewHolder(OrderedListViewHolder holder, int position) {
-        final CartonbookEntity cartonbookEntity = cartonbookEntities.get(position);
-        holder.orderTitle.setText(cartonbookEntity.getOrderId());
-        holder.clientName.setText("ClientName :"+cartonbookEntity.getClientName());
-        if(cartonbookEntity.getOrderType() == OrderType.ORDERED) {
+        final OrderEntity orderEntity = cartonbookEntities.get(position);
+        holder.orderTitle.setText(orderEntity.getOrderId());
+        holder.clientName.setText("ClientName :"+ orderEntity.getClientName());
+        if(orderEntity.getOrderType() == OrderType.ORDERED) {
             holder.orderImage.setImageResource(R.mipmap.ordered_icon);
-        }else if(cartonbookEntity.getOrderType() == OrderType.PACKING){
+        }else if(orderEntity.getOrderType() == OrderType.PACKING){
             holder.orderImage.setImageResource(R.mipmap.packing_icon);
         }else{
             holder.orderImage.setImageResource(R.mipmap.delivered_icon);
         }
         String date = null;
-        if (cartonbookEntity.getOrderedDate() != 0) {
-            date = Utils.convertMiliToDate(new Date(Long.valueOf(cartonbookEntity.getOrderedDate())));
+        if (orderEntity.getOrderedDate() != 0) {
+            date = Utils.convertMiliToDate(new Date(Long.valueOf(orderEntity.getOrderedDate())));
          //   holder.createdDate.setText(date);
         }
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cartonbookEntity.getOrderType() == OrderType.ORDERED) {
+                if(orderEntity.getOrderType() == OrderType.ORDERED) {
                     showAlertDialog();
-                }else if(cartonbookEntity.getOrderType() == OrderType.PACKING){
+                }else if(orderEntity.getOrderType() == OrderType.PACKING){
                     homeActivity.showProductList();
                 }else{
                     // generate report here

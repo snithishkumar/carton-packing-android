@@ -1,15 +1,15 @@
 package com.ordered.report.services;
 
+
+import com.ordered.report.json.models.OrderDetailsJson;
+
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.client.Response;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.GET;
 
 /**
  * Created by Admin on 1/1/2018.
@@ -20,6 +20,9 @@ public interface SyncServiceApi {
     @GET(ServiceUrls.CHECK_AUTHENTICATION)
     Response checkAuthentication(@Field("userName") String userName, @Field("password") String password);
     @GET(ServiceUrls.DOWNLOAD_URL)
-    Response getDownloadedSyncItems(@Field("lastSyncTime") long lastSyncTime);
+    Call<String> getDownloadedSyncItems(@Field("lastSyncTime") long lastSyncTime);
+
+    @GET(ServiceUrls.DOWNLOAD_URL)
+    Call<String> uploadData(@Body List<OrderDetailsJson> orderDetailsJsonList);
 
 }

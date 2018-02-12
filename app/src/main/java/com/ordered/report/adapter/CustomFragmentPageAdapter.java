@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ordered.report.fragment.DeliveredFragment;
-import com.ordered.report.fragment.PackingFragment;
 import com.ordered.report.fragment.OrderedFragment;
+import com.ordered.report.fragment.PackingFragment;
 
 public class CustomFragmentPageAdapter extends FragmentPagerAdapter {
 

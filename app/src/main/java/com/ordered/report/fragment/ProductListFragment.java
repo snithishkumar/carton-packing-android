@@ -15,7 +15,6 @@ import android.widget.Button;
 import com.ordered.report.HomeActivity;
 import com.ordered.report.R;
 import com.ordered.report.adapter.CategoryListAdapter;
-import com.ordered.report.adapter.OrderedListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

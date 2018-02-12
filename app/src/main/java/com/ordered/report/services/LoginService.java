@@ -6,11 +6,10 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
 import com.ordered.report.R;
+import com.ordered.report.SyncAdapter.ServiceAPI;
 import com.ordered.report.dao.LoginDao;
 import com.ordered.report.eventBus.AppBus;
 import com.ordered.report.json.models.LoginEvent;
@@ -20,10 +19,7 @@ import com.ordered.report.utils.FileUtils;
 import com.ordered.report.utils.Utils;
 
 import java.net.HttpURLConnection;
-import java.util.HashMap;
-import java.util.Map;
 
-import retrofit.client.Response;
 
 public class LoginService {
     private Context context = null;
@@ -45,14 +41,14 @@ public class LoginService {
 
     private void initServiceApi(Context context) throws Exception {
         cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        syncServiceApi = ServiceUrls.getSyncServiceApi();
+        syncServiceApi = ServiceAPI.INSTANCE.getSyncServiceApi();
         loginDao = new LoginDao(context);
     }
 
     public void checkAuthentication(String userName, String password) {
         try {
             if (Utils.isNetworkAvailable(cm)) {
-                Response serverResponse = null;
+                /*Response serverResponse = null;
                 try {
                     // Get data from the server
                     serverResponse = syncServiceApi.checkAuthentication(userName, password);
@@ -80,7 +76,7 @@ public class LoginService {
                             postAuthResult(Constants.INVALID_USERNAME);
                             break;
                     }
-                }
+                }*/
 
             } else {
                 UsersEntity usersEntity = loginDao.getUserEntity(userName);

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.ordered.report.dao.CartonbookDao;
 import com.ordered.report.enumeration.OrderType;
 import com.ordered.report.json.models.LoginEvent;
-import com.ordered.report.models.CartonbookEntity;
+import com.ordered.report.models.OrderEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class CartonbookService {
         }
     }
 
-    public List<CartonbookEntity> getCartonBookEntityList(String userName) {
+    public List<OrderEntity> getCartonBookEntityList(String userName) {
         try {
             return cartonbookDao.getAllCartonbokEntityList(userName);
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class CartonbookService {
         return new ArrayList<>();
     }
 
-    public List<CartonbookEntity> getCartonBookEntityByType(OrderType orderType) {
+    public List<OrderEntity> getCartonBookEntityByType(OrderType orderType) {
         if (orderType.toString().equals(OrderType.ORDERED.toString())) {
            return cartonbookDao.getCartonBookByOrderType(orderType);
         } else if (orderType.toString().equals(OrderType.PACKING.toString())) {

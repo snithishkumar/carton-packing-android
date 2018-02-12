@@ -1,7 +1,6 @@
 package com.ordered.report.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +12,13 @@ import android.view.ViewGroup;
 import com.ordered.report.R;
 import com.ordered.report.adapter.OrderedListAdapter;
 import com.ordered.report.enumeration.OrderType;
-import com.ordered.report.models.CartonbookEntity;
+import com.ordered.report.models.OrderEntity;
 import com.ordered.report.services.CartonbookService;
 
 import java.util.List;
 
 public class DeliveredFragment extends Fragment {
-    private List<CartonbookEntity> cartonbookEntities = null;
+    private List<OrderEntity> cartonbookEntities = null;
     private CartonbookService cartonbookService = null;
     RecyclerView recyclerView = null;
 
@@ -69,7 +68,7 @@ public class DeliveredFragment extends Fragment {
         super.onDetach();
     }
 
-    public List<CartonbookEntity> getOrderedCartonBookList() {
+    public List<OrderEntity> getOrderedCartonBookList() {
         cartonbookEntities = cartonbookService.getCartonBookEntityByType(OrderType.DELIVERED);
         return cartonbookEntities;
     }

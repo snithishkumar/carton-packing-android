@@ -4,11 +4,11 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.ordered.report.db.DatabaseHelper;
 import com.ordered.report.enumeration.OrderType;
 import com.ordered.report.models.CartonItemEntity;
-import com.ordered.report.models.CartonbookEntity;
-import com.ordered.report.models.UsersEntity;
+import com.ordered.report.models.OrderEntity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CartonbookDao {
     DatabaseHelper databaseHelper = null;
-    Dao<CartonbookEntity, String> cartonbookDao = null;
+    Dao<OrderEntity, String> cartonbookDao = null;
     Dao<CartonItemEntity, String> cartonItemDao = null;
 
     public CartonbookDao(Context context) throws Exception {
@@ -37,11 +37,11 @@ public class CartonbookDao {
         }
     }
 
-    private Dao<CartonbookEntity, String> getCartonbookDao() throws SQLException {
-        return databaseHelper.getDao(CartonbookEntity.class);
+    private Dao<OrderEntity, String> getCartonbookDao() throws SQLException {
+        return databaseHelper.getDao(OrderEntity.class);
     }
 
-    public List<CartonbookEntity> getAllCartonbokEntityList(String userName) {
+    public List<OrderEntity> getAllCartonbokEntityList(String userName) {
         try {
             return cartonbookDao.queryBuilder().query();
         } catch (Exception e) {
@@ -50,33 +50,33 @@ public class CartonbookDao {
         return new ArrayList<>();
     }
 
-    public void updateCortonbookEntity(CartonbookEntity cartonbookEntity) {
+    public void updateCortonbookEntity(OrderEntity orderEntity) {
         try {
-            cartonbookDao.update(cartonbookEntity);
+            cartonbookDao.update(orderEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public void savCartonbookEntity(CartonbookEntity cartonbookEntity) {
+    public void savCartonbookEntity(OrderEntity orderEntity) {
         try {
-            cartonbookDao.create(cartonbookEntity);
+            cartonbookDao.create(orderEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public CartonbookEntity getCartonBookEntityByGuid(String cartonbookGuid) {
+    public OrderEntity getCartonBookEntityByGuid(String cartonbookGuid) {
         try {
-            return cartonbookDao.queryBuilder().where().eq(CartonbookEntity.ORDER_GUID, cartonbookGuid).queryForFirst();
+            return cartonbookDao.queryBuilder().where().eq(OrderEntity.ORDER_GUID, cartonbookGuid).queryForFirst();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<CartonbookEntity> getCartonBookEntityByGuid() {
+    public List<OrderEntity> getCartonBookEntityByGuid() {
         try {
             return cartonbookDao.queryBuilder().query();
         } catch (Exception e) {
@@ -85,9 +85,19 @@ public class CartonbookDao {
         return new ArrayList<>();
     }
 
-    public List<CartonbookEntity> getCartonBookByOrderType(OrderType orderType) {
+
+    public List<OrderEntity> getUnSyncedOrderDetails(){
+        try{
+            return cartonbookDao.queryBuilder().where().eq(OrderEntity.IS_SYNC, false).query();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<OrderEntity> getCartonBookByOrderType(OrderType orderType) {
         try {
-             return cartonbookDao.queryBuilder().where().eq(CartonbookEntity.ORDER_STATUS, orderType).query();
+             return cartonbookDao.queryBuilder().where().eq(OrderEntity.ORDER_STATUS, orderType).query();
             //return cartonbookDao.queryBuilder().query();
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,17 +131,30 @@ public class CartonbookDao {
         return null;
     }
 
-    public CartonbookEntity getMaxSyncCartonBook() {
+    public OrderEntity getMaxSyncCartonBook() {
         try {
-            QueryBuilder<CartonbookEntity, String> queryBuilder = cartonbookDao.queryBuilder();
-            queryBuilder.where().eq(CartonbookEntity.IS_SYNC, true);
-            queryBuilder.orderBy(CartonbookEntity.SERVER_TIME, false);
+            QueryBuilder<OrderEntity, String> queryBuilder = cartonbookDao.queryBuilder();
+            queryBuilder.where().eq(OrderEntity.IS_SYNC, true);
+            queryBuilder.orderBy(OrderEntity.SERVER_TIME, false);
             queryBuilder.limit(1L);
             return queryBuilder.queryForFirst();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public void updateSyncStatus(String orderGuid){
+        try{
+          UpdateBuilder<OrderEntity, String> updateBuilder = cartonbookDao.updateBuilder();
+            updateBuilder.updateColumnValue(OrderEntity.IS_SYNC, true);
+            updateBuilder.where().eq(OrderEntity.ORDER_GUID,orderGuid);
+            updateBuilder.update();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

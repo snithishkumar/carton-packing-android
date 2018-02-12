@@ -1,10 +1,12 @@
 package com.ordered.report.models;
 
+import com.google.gson.Gson;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.ordered.report.enumeration.OrderType;
 import com.ordered.report.enumeration.PaymentStatus;
 import com.ordered.report.json.models.CartonItemModel;
+import com.ordered.report.json.models.OrderDetailsJson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * Created by Admin on 1/1/2018.
  */
 
-public class CartonbookEntity {
+public class OrderEntity {
     public static final String ID = "ID";
     public static final String ORDER_ID = "OrderId";
     public static final String ORDER_GUID = "OrderGuid";
@@ -46,8 +48,43 @@ public class CartonbookEntity {
     private long serverTime;
     @DatabaseField(columnName = "IsSync")
     private boolean isSync;
-    @DatabaseField(persisted = false)
-    private List<CartonItemModel> orderDetails = new ArrayList<>();
+
+    @DatabaseField(columnName = "OrderedItems",dataType = DataType.LONG_STRING)
+    private String orderedItems;
+
+
+    @DatabaseField(columnName = "OrderedDetails",dataType = DataType.LONG_STRING)
+    private String orderedDetails;
+
+
+
+
+    public OrderEntity(){
+
+    }
+
+
+    public OrderEntity(OrderDetailsJson orderDetailsJson){
+        this.orderId = orderDetailsJson.getOrderId();
+        this.orderGuid = orderDetailsJson.getOrderGuid();
+        this.clientName = null;
+       // this.orderStatus = orderDetailsJson.getOrderStatus();
+        this.paymentStatus = orderDetailsJson.getPaymentStatus();
+        this.orderedDate = orderDetailsJson.getOrderedDate();
+        this.serverTime = orderDetailsJson.getServerTime();
+        this.isSync = true;
+        Gson gson = new Gson();
+        this.orderedItems = gson.toJson(orderDetailsJson.getOrderedItems());;
+
+    }
+
+    public String getOrderedItems() {
+        return orderedItems;
+    }
+
+    public void setOrderedItems(String orderedItems) {
+        this.orderedItems = orderedItems;
+    }
 
     public int getId() {
         return Id;
@@ -121,30 +158,7 @@ public class CartonbookEntity {
         this.serverTime = serverTime;
     }
 
-    public List<CartonItemModel> getCartonItemModelList() {
-        return orderDetails;
-    }
 
-    public void setCartonItemModelList(List<CartonItemModel> cartonItemModelList) {
-        this.orderDetails = cartonItemModelList;
-    }
-
-    @Override
-    public String toString() {
-        return "CartonbookEntity{" +
-                "Id=" + Id +
-                ", orderId='" + orderId + '\'' +
-                ", orderGuid='" + orderGuid + '\'' +
-                ", clientName='" + clientName + '\'' +
-                ", orderType=" + orderStatus +
-                ", paymentStatus=" + paymentStatus +
-                ", orderedDate=" + orderedDate +
-                ", lastModifiedDate=" + lastModifiedDate +
-                ", serverTime=" + serverTime +
-                ", isSync=" + isSync +
-                ", orderDetail=" + orderDetails +
-                '}';
-    }
 
     public boolean isSync() {
         return isSync;
@@ -154,11 +168,37 @@ public class CartonbookEntity {
         isSync = sync;
     }
 
-    public List<CartonItemModel> getOrderDetail() {
-        return orderDetails;
+    public OrderType getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderDetail(List<CartonItemModel> orderDetail) {
-        this.orderDetails = orderDetail;
+    public void setOrderStatus(OrderType orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getOrderedDetails() {
+        return orderedDetails;
+    }
+
+    public void setOrderedDetails(String orderedDetails) {
+        this.orderedDetails = orderedDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "Id=" + Id +
+                ", orderId='" + orderId + '\'' +
+                ", orderGuid='" + orderGuid + '\'' +
+                ", clientName='" + clientName + '\'' +
+                ", orderStatus=" + orderStatus +
+                ", paymentStatus=" + paymentStatus +
+                ", orderedDate=" + orderedDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", serverTime=" + serverTime +
+                ", isSync=" + isSync +
+                ", orderedItems='" + orderedItems + '\'' +
+                ", orderedDetails='" + orderedDetails + '\'' +
+                '}';
     }
 }

@@ -3,24 +3,19 @@ package com.ordered.report.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.ordered.report.R;
 import com.ordered.report.adapter.OrderedListAdapter;
 import com.ordered.report.enumeration.OrderType;
-import com.ordered.report.models.CartonbookEntity;
+import com.ordered.report.models.OrderEntity;
 import com.ordered.report.services.CartonbookService;
 import com.ordered.report.utils.FileUtils;
 
@@ -30,7 +25,7 @@ import java.util.List;
 
 public class OrderedFragment extends Fragment {
     private Context context;
-    private List<CartonbookEntity> cartonbookEntities = null;
+    private List<OrderEntity> cartonbookEntities = null;
     private CartonbookService cartonbookService = null;
     RecyclerView recyclerView =null;
     public OrderedFragment() {
@@ -69,7 +64,7 @@ public class OrderedFragment extends Fragment {
         }
     }
 
-    public List<CartonbookEntity> getOrderedCartonBookList() {
+    public List<OrderEntity> getOrderedCartonBookList() {
         cartonbookEntities = cartonbookService.getCartonBookEntityByType(OrderType.ORDERED);
         return cartonbookEntities;
     }

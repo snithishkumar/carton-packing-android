@@ -1,9 +1,7 @@
 package com.ordered.report.eventBus;
 
-import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.squareup.otto.Bus;
@@ -20,7 +18,6 @@ public class AppBus extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        MultiDex.install(this);
         mEventBus = new Bus();
     }
 

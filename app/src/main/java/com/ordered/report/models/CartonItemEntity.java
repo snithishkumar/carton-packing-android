@@ -41,7 +41,7 @@ public class CartonItemEntity {
     @DatabaseField(columnName = "CartonNumber")
     String cartonNumber;
     @DatabaseField(columnName = "OrderId", foreign = true, foreignAutoRefresh = true)
-    private CartonbookEntity cartonbookEntity;
+    private OrderEntity orderEntity;
     private List<CartonItemModel> cartonItemModelList = new ArrayList<>();
 
     public CartonItemEntity() {
@@ -130,12 +130,12 @@ public class CartonItemEntity {
         this.itemGuid = itemGuid;
     }
 
-    public CartonbookEntity getCartonbookEntity() {
-        return cartonbookEntity;
+    public OrderEntity getOrderEntity() {
+        return orderEntity;
     }
 
-    public void setCartonbookEntity(CartonbookEntity cartonbookEntity) {
-        this.cartonbookEntity = cartonbookEntity;
+    public void setOrderEntity(OrderEntity orderEntity) {
+        this.orderEntity = orderEntity;
     }
 
     public List<CartonItemModel> getCartonItemModelList() {
@@ -158,7 +158,7 @@ public class CartonItemEntity {
                 ", rate=" + rate +
                 ", totalCost=" + totalCost +
                 ", cartonNumber='" + cartonNumber + '\'' +
-                ", cartonbookEntity=" + cartonbookEntity +
+                ", orderEntity=" + orderEntity +
                 ", cartonItemModelList=" + cartonItemModelList +
                 '}';
     }
