@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1976D2</color>
+    <color name="primary">#00B0FF</color>
+    <!--<color name="colorPrimaryDark">#988a62</color>-->
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#0D47A1</color>
+    <color name="colorDarker">#d3c498</color>
+    <color name="colorLighter">#000000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorBorder">#e6e3e2</color>
+    <color name="colorLight">#7F7F7F</color>
+    <color name="menu">#76787b</color>
+    <color name="transparent">#0000</color>
+
+    <color name="redDark">#B71C1C</color>
+
+</resources>
